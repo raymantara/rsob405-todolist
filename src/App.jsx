@@ -5,11 +5,7 @@ export default function App() {
     <div className="app">
       <h1>To-Do List</h1>
       <form>
-        <input
-          type="text"
-          placeholder="Введите задачу..."
-          className="input"
-        />
+        <input type="text" placeholder="Введите задачу..." className="input" />
         <button type="submit" className="button">
           Добавить
         </button>
