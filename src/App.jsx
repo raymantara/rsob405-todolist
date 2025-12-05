@@ -4,7 +4,9 @@ import './App.css';
 export default function App() {
   const [tasks, setTasks] = useState([]);
   const [inputValue, setInputValue] = useState('');
+  const [filter, setFilter] = useState('all'); // 'all', 'active', 'completed'
 
+  // Загрузка задач из localStorage при старте
   useEffect(() => {
     const saved = localStorage.getItem('tasks');
     if (saved) {
@@ -12,17 +14,20 @@ export default function App() {
     }
   }, []);
 
+  // Сохранение задач в localStorage при любом изменении
   useEffect(() => {
     localStorage.setItem('tasks', JSON.stringify(tasks));
   }, [tasks]);
 
+  // Добавление новой задачи
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (inputValue.trim() === '') return;
+    const text = inputValue.trim();
+    if (text === '') return;
 
     const newTask = {
       id: Date.now(),
-      text: inputValue.trim(),
+      text,
       completed: false,
     };
 
@@ -30,6 +35,7 @@ export default function App() {
     setInputValue('');
   };
 
+  // Переключение статуса задачи
   const toggleTask = (id) => {
     setTasks(
       tasks.map((task) =>
@@ -37,6 +43,13 @@ export default function App() {
       )
     );
   };
+
+  // Фильтрация задач
+  const filteredTasks = tasks.filter((task) => {
+    if (filter === 'active') return !task.completed;
+    if (filter === 'completed') return task.completed;
+    return true; // 'all'
+  });
 
   return (
     <div className="app">
@@ -55,16 +68,37 @@ export default function App() {
       </form>
 
       <ul className="task-list">
-        {tasks.map((task) => (
+        {filteredTasks.map((task) => (
           <li
             key={task.id}
-            className={`task ${task.completed ? 'completed' : ''}`}
+            className={task ${task.completed ? 'completed' : ''}}
             onClick={() => toggleTask(task.id)}
           >
             {task.text}
           </li>
         ))}
       </ul>
+
+      <div className="filters">
+        <button
+          className={filter === 'all' ? 'active' : ''}
+          onClick={() => setFilter('all')}
+        >
+          Все
+        </button>
+        <button
+          className={filter === 'active' ? 'active' : ''}
+          onClick={() => setFilter('active')}
+        >
+          Активные
+        </button>
+        <button
+          className={filter === 'completed' ? 'active' : ''}
+          onClick={() => setFilter('completed')}
+        >
+          Выполненные
+        </button>
+      </div>
     </div>
   );
 }
