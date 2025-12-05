@@ -1,23 +1,35 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 
 export default function App() {
-  const [tasks, setTasks] = useState([]); // список задач
-  const [inputValue, setInputValue] = useState(''); // текст в поле ввода
+  const [tasks, setTasks] = useState([]);
+  const [inputValue, setInputValue] = useState('');
 
-  // Функция обработки отправки формы
+  // Загрузка при старте
+  useEffect(() => {
+    const saved = localStorage.getItem('tasks');
+    if (saved) {
+      setTasks(JSON.parse(saved));
+    }
+  }, []);
+
+  // Сохранение при изменении
+  useEffect(() => {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }, [tasks]);
+
   const handleSubmit = (e) => {
-    e.preventDefault(); // останавливает перезагрузку страницы
-    if (inputValue.trim() === '') return; // не добавлять пустые задачи
+    e.preventDefault();
+    if (inputValue.trim() === '') return;
 
     const newTask = {
-      id: Date.now(), // уникальный ID
+      id: Date.now(),
       text: inputValue.trim(),
-      completed: false, // по умолчанию — не выполнена
+      completed: false,
     };
 
-    setTasks([...tasks, newTask]); // добавляем новую задачу в список
-    setInputValue(''); // очищаем поле ввода
+    setTasks([...tasks, newTask]);
+    setInputValue('');
   };
 
   return (
