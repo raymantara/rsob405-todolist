@@ -4,9 +4,8 @@ import './App.css';
 export default function App() {
   const [tasks, setTasks] = useState([]);
   const [inputValue, setInputValue] = useState('');
-  const [filter, setFilter] = useState('all'); // 'all', 'active', 'completed'
+  const [filter, setFilter] = useState('all');
 
-  // Загрузка задач из localStorage при старте
   useEffect(() => {
     const saved = localStorage.getItem('tasks');
     if (saved) {
@@ -14,12 +13,10 @@ export default function App() {
     }
   }, []);
 
-  // Сохранение задач в localStorage при любом изменении
   useEffect(() => {
     localStorage.setItem('tasks', JSON.stringify(tasks));
   }, [tasks]);
 
-  // Добавление новой задачи
   const handleSubmit = (e) => {
     e.preventDefault();
     const text = inputValue.trim();
@@ -35,7 +32,6 @@ export default function App() {
     setInputValue('');
   };
 
-  // Переключение статуса задачи
   const toggleTask = (id) => {
     setTasks(
       tasks.map((task) =>
@@ -44,11 +40,10 @@ export default function App() {
     );
   };
 
-  // Фильтрация задач
   const filteredTasks = tasks.filter((task) => {
     if (filter === 'active') return !task.completed;
     if (filter === 'completed') return task.completed;
-    return true; // 'all'
+    return true;
   });
 
   return (
@@ -71,7 +66,7 @@ export default function App() {
         {filteredTasks.map((task) => (
           <li
             key={task.id}
-            className={task ${task.completed ? 'completed' : ''}}
+            className={`task ${task.completed ? 'completed' : ''}`}
             onClick={() => toggleTask(task.id)}
           >
             {task.text}
