@@ -1,27 +1,16 @@
-# ToDo List App
+# React + Vite
 
-## Описание
-Минималистичное приложение для ведения задач: добавление, отметка выполненных, фильтры, сохранение в localStorage.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Участники
-- Виктор — тимлид / dev
-- Николай — разработчик
-- Никита — разработчик
+Currently, two official plugins are available:
 
-## Стек
-- Frontend: React (Vite)
-- Tools: Git, GitHub Actions, ESLint, Prettier
-- Деплой: Vercel / Netlify
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Быстрый запуск
-1. `npm install`
-2. `npm run dev`
+## React Compiler
 
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-План:
-1.	Планирование, создание репозитория, бэклога (GitHub Projects).
-2.	Разработка базовой верстки и функционала добавления задачи.
-3.	Реализация удаления и отметки о выполнении. Первые PR и код-ревью.
-4.	Добавление фильтрации (Все/Активные/Завершенные).
-5.	Рефакторинг, тестирование, работа с конфликтами.
-6.	Деплой на GitHub Pages/Netlify и ретроспектива.
+## Expanding the ESLint configuration
+
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
