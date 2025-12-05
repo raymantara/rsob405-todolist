@@ -5,7 +5,6 @@ export default function App() {
   const [tasks, setTasks] = useState([]);
   const [inputValue, setInputValue] = useState('');
 
-  // Загрузка при старте
   useEffect(() => {
     const saved = localStorage.getItem('tasks');
     if (saved) {
@@ -13,7 +12,6 @@ export default function App() {
     }
   }, []);
 
-  // Сохранение при изменении
   useEffect(() => {
     localStorage.setItem('tasks', JSON.stringify(tasks));
   }, [tasks]);
@@ -30,6 +28,14 @@ export default function App() {
 
     setTasks([...tasks, newTask]);
     setInputValue('');
+  };
+
+  const toggleTask = (id) => {
+    setTasks(
+      tasks.map((task) =>
+        task.id === id ? { ...task, completed: !task.completed } : task
+      )
+    );
   };
 
   return (
@@ -50,7 +56,11 @@ export default function App() {
 
       <ul className="task-list">
         {tasks.map((task) => (
-          <li key={task.id} className="task">
+          <li
+            key={task.id}
+            className={`task ${task.completed ? 'completed' : ''}`}
+            onClick={() => toggleTask(task.id)}
+          >
             {task.text}
           </li>
         ))}
